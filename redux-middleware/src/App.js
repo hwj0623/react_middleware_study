@@ -11,16 +11,27 @@ import axios from 'axios';
  *
  */
 class App extends Component {
-
+    /**
+     * 요청 취소 작업
+     */
+    cancelRequest = null
+    handleCancel = () => {
+        if(this.cancelRequest){
+            this.cancelRequest();
+            this.cancelRequest = null;
+        }
+    }
     //ES7 async, await 적용시
     loadData = async () => {
         const { PostActions, number} = this.props;
         try{
-            const response = await  PostActions.getPost(number).then(
-                (response) => {
-                    console.log(response);
-                }
-            )
+            // const response = await  PostActions.getPost(number)
+            // console.log(response);
+            /**  요청 취소 작업  */
+            const p = PostActions.getPost(number)
+            this.cancelRequest = p.cancel;
+            const response = await p;
+            console.log(response);
         }catch(e){
             console.log(e);
         }
@@ -44,6 +55,11 @@ class App extends Component {
         // axios.get('https://jsonplaceholder.typicode.com/posts/1')
         //     .then(response => console.log(response));
         this.loadData();
+        window.addEventListener('keyup', (e)=>{
+            if(e.key =='Escape'){
+                this.handleCancel();
+            }
+        })
     }
     componentDidUpdate(prevProps, prevState){
         //이전 number와 비교
@@ -86,8 +102,8 @@ export default connect(
     (state) => ({
         number: state.counter,
         post : state.post.data,
-        loading : state.post.loading,
-        error : state.post.error
+        loading : state.pender.pending['GET_POST'],
+        error : state.pender.failure['GET_POST']
     }),
     (dispatch) => ({
         CounterActions: bindActionCreators(counterActions, dispatch),

@@ -1,7 +1,18 @@
 import { createStore, applyMiddleware } from 'redux';
 import modules from './modules';
+
 import {createLogger} from 'redux-logger';
-import ReduxThunk from 'redux-thunk';
+import penderMiddleware from 'redux-pender';
+/**
+ * penderMiddleware
+ * - Promise 기반 액션들을 관리하는 미들웨어가 포함된 라이브러리
+ * - redux-promise-middleware와 유사
+ * - 액션 객체 안에 payload가 Promise 형태라면 시작하기 전, 완료, 실패 뒤에 PENDING, SUCCESS, FAILURE 접미사 붙여줌
+ * - 요청 관리 리듀서가 포함됨
+ * - 요청 관련 액션들을 처리하는 액션 핸들러 함수 자동 생성 가능
+ * - 요청 중인 액션 취소 기능 내장
+ *
+ */
 
 /**
  * ReduxThunk 미들웨어는 객체가 아닌 함수도 디스패치 가능
@@ -17,6 +28,6 @@ import ReduxThunk from 'redux-thunk';
  */
 const logger = createLogger();
 
-const store = createStore(modules, applyMiddleware(logger, ReduxThunk))
+const store = createStore(modules, applyMiddleware(logger, penderMiddleware() ))
 
 export default store;

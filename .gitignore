@@ -13,7 +13,12 @@
 
 #git
 .idea
+**/.idea
+**/node_modules
+*/node_modules
 
+**/build
+*/build
 
 # misc
 .DS_Store

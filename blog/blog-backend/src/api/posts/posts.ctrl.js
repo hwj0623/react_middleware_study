@@ -21,6 +21,8 @@ const posts = [
  */
 exports.write = (ctx) => {
     //REST API 의 request body는 ctx.request.body 에서 조회할 수 있다.
+
+    console.log("ctx request : ", ctx.request)
     const {
         title,
         body

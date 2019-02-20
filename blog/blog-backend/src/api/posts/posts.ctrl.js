@@ -4,98 +4,95 @@
  *  posts.get('/', (ctx) => { ... });
  */
 
-let postId = 1
+const Post = require('models/post')
 
-const posts = [
-    {
-        id: 1,
-        title: '제목',
-        body: '내용'
+/**
+ * ObjectId 검증 미들웨어 생성
+ */
+const {ObjectId } = require('mongoose').Types
+exports.checkObjectId = (ctx, next) =>{
+    const{id} = ctx.params
+
+    //verification failure
+    if(!ObjectId.isValid(id)){
+        ctx.status = 400    //400 Bad Request
+        return null
     }
-]
 
+    return next() //ctx,body 설정을 위해 next를 리턴한다
+}
 /**
  * 포스트 작성
  * POST /api/posts
  *  { title, body }
  */
-exports.write = (ctx) => {
-    //REST API 의 request body는 ctx.request.body 에서 조회할 수 있다.
+exports.write = async (ctx) => {
+    const {title, body, tags} = ctx.request.body
 
-    console.log("ctx request : ", ctx.request)
-    const {
-        title,
-        body
-    } = ctx.request.body
+    //create new post instance
+    const post = new Post({
+        title, body, tags
+    })
 
-    postId += 1 //기존 postId 값 increment
-
-    const post = {id: postId, title, body}
-    posts.push(post)
-    ctx.body = post
+    try {
+        await post.save();      //DB에 등록
+        ctx.body = post;        //저장 결과 반환
+    } catch (e) {
+        //DB 오류 발생
+        ctx.throw(e, 500)
+    }
 }
 
 /**
  * 포스트 목록 조회
  * GET /api/posts
  */
-exports.list = (ctx) => {
-    ctx.body = posts
+exports.list = async (ctx) => {
+    try {
+        const posts = await Post.find().exec()
+        ctx.body = posts  //post add to response body
+    } catch (e) {
+        ctx.throw(e, 500)
+    }
 }
 
 /**
  * 특정 포스트 조회
  * GET /api/posts/:id
  */
-
-exports.read = (ctx) => {
+exports.read = async (ctx) => {
     const {id} = ctx.params
 
-    /** 주어진 id 값으로 post를 찾는다.
-     파라미터로 받아 온 값은 문자열 형식이다.
-     1)따라서 파라미터를 숫자로 변환하거나
-     2)비교할 p.id 값을 문자열로 변경해야 함
-     */
-    const post = posts.find(p => p.id.toString() === id)
-
-    /**
-     * 포스트 없으면 오류 반환
-     */
-    if (!post) {
-        ctx.status = 404
-        ctx.body = {
-            message: "Post doesn't exist. "
+    try {
+        const post = await Post.findById(id).exec()
+        if(!post){
+            ctx.status = 404
+            return
         }
-        return
+        ctx.body = post      //post add to response body
+    }catch (e){
+        ctx.throw(e, 500)
     }
 
-    ctx.body = post
 }
 
 /**
  * 특정 포스트 제거
  * DELETE /api/posts/:id
+ *  remove - 특정 조건 만족 데이터 모두 지움
+ *  findByIdAndRemove(id) : id 찾아서 지움
+ *  findOneAndRemove(조건 ) : 특정 조건 만족 데이터 하나를 찾아서 제거
  *
  */
+exports.remove = async (ctx) => {
+    const{id } = ctx.params
 
-exports.remove = (ctx) => {
-    const {id} = ctx.params
-
-    //해당 id를 가진 post가 몇 번째인지 확인합니다.
-    const index = posts.findIndex(p => p.id.toString() === id)
-
-    //포스트가 없으면 오류를 반환
-    if (index === -1) {
-        ctx.status = 404
-        ctx.body = {
-            message: "Post doesn't exist. "
-        }
-        return
+    try{
+        await Post.findByIdAndRemove(id).exec()
+        ctx.status = 204
+    }catch{
+        ctx.throw(e, 500)
     }
-
-    //index 번째 아이템 제거
-    posts.splice(index, 1)
-    ctx.status = 204 // No Content
 
 }
 
@@ -104,29 +101,9 @@ exports.remove = (ctx) => {
  * PUT /api/posts/:id
  * {title, body}
  */
-exports.replace = (ctx) => {
-    //PUT 메서드는 전체 포스트 정보를 입력하여 데이터를 통째로 교체할 때 사용
-    const {id} = ctx.params
+exports.replace = async (ctx) => {
 
-    //해당 id를 가진 post가 몇 번째인지 확인
-    const index = posts.findIndex(p => p.id.toString() === id)
 
-    //포스트가 없으면 오류를 반환
-    if (index === -1) {
-        ctx.status = 404
-        ctx.body = {
-            message: "Post doesn't exist. "
-        }
-        return
-    }
-
-    //전체 객체를 덮어 씌운다.
-    //id를 제외한 기존 정보 날리고 객체를 새로 만듬
-    posts[index] = {
-        id,
-        ...ctx.request.body
-    }
-    ctx.body = posts[index]
 }
 
 
@@ -135,27 +112,23 @@ exports.replace = (ctx) => {
  * PUT /api/posts/:id
  * {title, body}
  */
-
-exports.update = (ctx) => {
-    //PATCH 메서드는 주어진 필드만 교체
+exports.update = async (ctx) => {
     const {id} = ctx.params
+    try{
+        const post = await Post.findByIdAndUpdate(id, ctx.request.body, {
+            new: true
+            //이 값을 설정해야 업데이트 된 객체를 반환함
+            //설정하지 않으면 업데이트 전의 객체 반환
+        }).exec()
 
-    //해당 id를 가진 post가 몇 번째인지 확인
-    const index = posts.findIndex(p => p.id.toString() === id)
-
-    //포스트가 없으면 오류를 반환
-    if (index === -1) {
-        ctx.status = 404
-        ctx.body = {
-            message: "Post doesn't exist. "
+        if(!post){
+            ctx.status = 404
+            return
         }
-        return
+        ctx.body = post
+
+    }catch(e){
+        ctx.throw(e, 500)
     }
 
-    //기존 값에 정보 덮어씌움
-    posts[index] = {
-        ...posts[index],
-        ...ctx.request.body
-    }
-    ctx.body = posts[index]
 }

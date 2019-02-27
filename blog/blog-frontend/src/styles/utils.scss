@@ -8,7 +8,7 @@
 
 */
 /* styles/lib의 모든 기능들을 불러온다. */
-@import 'lib/all';
+@import './lib/all';
 
 /* reactive design 을 할 때 참조할 구간을 변수로 저장*/
 $breakpoints: (small: 320px, medium: 768px, large: 1024px, wide: 1400px);

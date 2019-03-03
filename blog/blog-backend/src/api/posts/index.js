@@ -1,7 +1,7 @@
-const Router = require('koa-router')
-const postsCtrl = require('./posts.ctrl')
+const Router = require('koa-router');
+const postsCtrl = require('./posts.ctrl');
 
-const posts = new Router()
+const posts = new Router();
 
 /**
  * postsCtrl를 불러오면 다음 객체가 불려온다

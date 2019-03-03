@@ -1,0 +1,61 @@
+@charset "UTF-8";
+/*
+
+색상 팔렛 : ttps://yeun.github.io/open-color
+색상 변수 형태 : $oc-색상-밝기'
+앞으로 컴포넌트 스타일 작성시, 유틸에 적용한 코드를 사용하려면
+@import 'utils.scss' 만 작성하면 된다.
+
+*/
+/* styles/lib의 모든 기능들을 불러온다. */
+/*색상 선택 모듈*/
+/*반응형 디자인 적용 모듈*/
+/* mixin */
+/* reactive design 을 할 때 참조할 구간을 변수로 저장*/
+.editor-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column; }
+  .editor-pane .title {
+    background: #495057;
+    border: none;
+    outline: none;
+    font-size: 1.5rem;
+    padding: 1rem;
+    color: white;
+    font-weight: 500; }
+    .editor-pane .title::placeholder {
+      color: rgba(255, 255, 255, 0.75); }
+  .editor-pane .code-editor {
+    flex: 1;
+    background: #212529;
+    display: flex;
+    flex-direction: row; }
+    .editor-pane .code-editor :global .CodeMirror {
+      font-size: 1rem;
+      flex: auto;
+      font-family: 'D2 Coding'; }
+  .editor-pane .tags {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    height: 2rem;
+    background: #495057;
+    display: flex;
+    align-items: center; }
+    .editor-pane .tags .description {
+      font-size: 0.85rem;
+      color: white;
+      font-weight: 600;
+      margin-right: 1rem; }
+    .editor-pane .tags input {
+      font-size: 0.85rem;
+      border: none;
+      flex: 1;
+      background: none;
+      outline: none;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9); }
+      .editor-pane .tags input::placeholder {
+        color: rgba(255, 255, 255, 0.75); }
+
+/*# sourceMappingURL=EditorPane.css.map */

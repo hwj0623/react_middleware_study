@@ -1,0 +1,32 @@
+@charset "UTF-8";
+/*
+
+색상 팔렛 : ttps://yeun.github.io/open-color
+색상 변수 형태 : $oc-색상-밝기'
+앞으로 컴포넌트 스타일 작성시, 유틸에 적용한 코드를 사용하려면
+@import 'utils.scss' 만 작성하면 된다.
+
+*/
+/* styles/lib의 모든 기능들을 불러온다. */
+/*색상 선택 모듈*/
+/*반응형 디자인 적용 모듈*/
+/* mixin */
+/* reactive design 을 할 때 참조할 구간을 변수로 저장*/
+.post-body .paper {
+  padding: 2rem;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+  background: white;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.125), 0 10px 10px rgba(0, 0, 0, 0.11);
+  transform: translateY(-3rem);
+  margin: 0 auto;
+  min-height: 20rem;
+  width: 1024px; }
+  @media (max-width: 1023px) {
+    .post-body .paper {
+      width: 768px; } }
+  @media (max-width: 767px) {
+    .post-body .paper {
+      width: calc(100% - 2rem); } }
+
+/*# sourceMappingURL=PostBody.css.map */

@@ -1,0 +1,62 @@
+@charset "UTF-8";
+/*
+
+색상 팔렛 : ttps://yeun.github.io/open-color
+색상 변수 형태 : $oc-색상-밝기'
+앞으로 컴포넌트 스타일 작성시, 유틸에 적용한 코드를 사용하려면
+@import 'utils.scss' 만 작성하면 된다.
+
+*/
+/* styles/lib의 모든 기능들을 불러온다. */
+/*색상 선택 모듈*/
+/*반응형 디자인 적용 모듈*/
+/* mixin */
+/* reactive design 을 할 때 참조할 구간을 변수로 저장*/
+.post-info {
+  background: #228be6;
+  height: 24rem;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .post-info .info {
+    margin-top: -5rem;
+    width: 1024px;
+    padding: 1rem;
+    color: white; }
+    .post-info .info h1 {
+      font-weight: 300;
+      font-size: 3rem;
+      margin: 0; }
+    .post-info .info .tags {
+      margin-top: 1rem;
+      font-size: 1.25rem;
+      font-weight: 500; }
+      .post-info .info .tags a:hover {
+        text-decoration: underline; }
+      .post-info .info .tags a + a {
+        margin-left: 0.25rem; }
+    .post-info .info .date {
+      text-align: right;
+      opacity: 0.75;
+      font-style: italic;
+      font-size: 1.25rem; }
+  @media (max-width: 1023px) {
+    .post-info .info {
+      width: 768px; }
+      .post-info .info h1 {
+        font-size: 2rem; }
+      .post-info .info .tags, .post-info .info .date {
+        font-size: 1rem; } }
+  @media (max-width: 767px) {
+    .post-info {
+      height: auto;
+      padding-bottom: 4rem; } }
+  .post-info .info {
+    padding-top: 0;
+    marign: 0; }
+    .post-info .info .tags {
+      margin-top: 0.25rem; }
+    .post-info .info .tags, .post-info .info .date {
+      font-size: 0.85rem; }
+
+/*# sourceMappingURL=PostInfo.css.map */

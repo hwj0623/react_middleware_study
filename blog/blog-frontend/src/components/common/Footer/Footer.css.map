@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": ";AACA;;;;;;;EAOE;AACF,+BAA+B;ACT/B,YAAY;AAEZ,iBAAiB;AAGjB,WAAW;ADOX,yCAAyC;AERzC,OAAO;EACL,UAAU,ECiCA,OAA2B;EDhCrC,MAAM,EAAE,KAAK;EAGb,OAAO,EAAE,IAAI;EACb,WAAW,EAAC,MAAM;EAClB,eAAe,EAAE,MAAM;EACvB,cAAc,EAAE,MAAM;EAEtB,cAAM;IAEJ,KAAK,EAAE,KAAK;IACZ,SAAS,EAAE,IAAI;IACf,WAAW,EAAE,GAAG;EAIlB,oBAAY;IAEV,UAAU,EAAE,MAAM;IAClB,WAAW,EAAE,GAAG;IAChB,SAAS,EAAE,MAAM;IACjB,KAAK,EAAE,wBAAqB;IAC5B,MAAM,EAAE,OAAO;IACf,0BAAQ;MACN,KAAK,EAAE,KAAK",
-"sources": ["../../../styles/utils.scss","../../../styles/lib/_all.scss","Footer.scss","../../../../node_modules/open-color/open-color.scss"],
-"names": [],
-"file": "Footer.css"
-}

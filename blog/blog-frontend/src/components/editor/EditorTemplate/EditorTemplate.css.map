@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": ";AACA;;;;;;;EAOE;AACF,+BAA+B;ACT/B,YAAY;AAEZ,iBAAiB;AAGjB,WAAW;ADOX,yCAAyC;AETvC,uBAAO;EACL,MAAM,EAAE,kBAAkB;EAC1B,OAAO,EAAE,IAAI;EACb,QAAQ,EAAE,QAAQ;EAElB,6BAAM;IACJ,OAAO,EAAE,IAAI;IACb,SAAS,EAAE,CAAC;IACZ,QAAQ,EAAE,IAAI;EAIhB,kCAAU;IACR,KAAK,EAAE,IAAI;IACX,MAAM,EAAE,IAAI;IACZ,QAAQ,EAAE,QAAQ;IAClB,SAAS,EAAE,eAAe;IAC1B,MAAM,EAAC,UAAU;EC6hBnB,yBAAyD;IDxhBvD,+BAAQ;MACN,IAAI,EAAE,YAAW;IAEnB,oEAAqB;MACnB,OAAO,EAAE,IAAI",
-"sources": ["../../../styles/utils.scss","../../../styles/lib/_all.scss","EditorTemplate.scss","../../../../node_modules/include-media/dist/_include-media.scss"],
-"names": [],
-"file": "EditorTemplate.css"
-}

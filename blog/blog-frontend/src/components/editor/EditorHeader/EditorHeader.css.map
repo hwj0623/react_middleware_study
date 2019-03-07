@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": ";AACA;;;;;;;EAOE;AACF,+BAA+B;ACT/B,YAAY;AAEZ,iBAAiB;AAGjB,WAAW;ADOX,yCAAyC;AEVzC,cAAc;EACZ,UAAU,EC0MA,OAA2B;EDzMrC,MAAM,EAAE,IAAI;EACZ,YAAY,EAAE,IAAI;EAClB,aAAa,EAAE,IAAI;EACnB,OAAO,EAAE,IAAI;EACb,WAAW,EAAE,MAAM;EAEnB,sBAAO;IAEL,WAAW,EAAE,IAAI",
-"sources": ["../../../styles/utils.scss","../../../styles/lib/_all.scss","EditorHeader.scss","../../../../node_modules/open-color/open-color.scss"],
-"names": [],
-"file": "EditorHeader.css"
-}

@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AACE,uBAAM;EACJ,MAAM,EAAE,kBAAkB;EAC1B,OAAO,EAAE,IAAI",
+"sources": ["EditorTemplate.scss"],
+"names": [],
+"file": "EditorTemplate.css"
+}

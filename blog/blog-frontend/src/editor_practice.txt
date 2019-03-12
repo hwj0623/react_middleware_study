@@ -31,3 +31,14 @@ console.log('코드');
 
 ## 이미지
 ![](http://via.placeholder.com/350x150)
+
+
+
+# react_middleware_study
+
+velopert님 react 교재 공부
+- redux, redux-pender, middleware 사용법, logger, etc
+
+
+## 21 프로젝트에서 API 연동
+

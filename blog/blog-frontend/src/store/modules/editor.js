@@ -3,8 +3,9 @@ import {createAction, handleActions} from 'redux-actions';
 import {Map } from 'immutable';
 import {pender} from 'redux-pender';
 
-//action types
-const  INITIALIZE = 'editor/INITIALIZE';
+
+// action types
+const INITIALIZE = 'editor/INITIALIZE';
 const CHANGE_INPUT = 'editor/CHANGE_INPUT';
 
 //action creators  액션 생성

@@ -4,7 +4,23 @@ import classNames from 'classnames/bind';
 
 import marked from 'marked';
 
+
+/**
+ * 20.6.4 prismjs 관련 코드 불러오기
+ */
+import Prism from 'prismjs';
+import 'prismjs/themes/prism-okaidia.css';
+//지원 코드 형식
+//http://prismjs.com/#languages-list  참고
+import 'prismjs/components/prism-bash.min.js';
+import 'prismjs/components/prism-javascript.min.js';
+import 'prismjs/components/prism-jsx.min.js';
+import 'prismjs/components/prism-css.min.js';
+
+
 const cx = classNames.bind(styles);
+
+
 
 /**
  * 마크다운 변환을 위한 Presentational Component
@@ -51,6 +67,11 @@ class MarkdownRender extends Component {
         //markdown 값이 변경되면 renderMarkdown을 호출한다.
         if (prevProps.markdown !== this.props.markdown) {
             this.renderMarkdown();
+        }
+
+        //state 변경시 코드 하이라이팅
+        if(prevState.html !== this.state.html){
+            Prism.highlightAll();
         }
     }
 

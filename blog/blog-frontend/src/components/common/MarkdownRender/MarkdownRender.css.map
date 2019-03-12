@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "",
-"sources": [],
+"mappings": "AAEE,2BAAU;EACR,WAAW,EAAE,SAAS",
+"sources": ["MarkdownRender.scss"],
 "names": [],
 "file": "MarkdownRender.css"
 }

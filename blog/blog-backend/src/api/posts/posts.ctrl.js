@@ -3,19 +3,19 @@
  *
  *  posts.get('/', (ctx) => { ... });
  */
-const Post = require('models/post');
+const Post = require('../../models/post');
 /** Request Body 검증 */
-const Joi  = require('joi');
+const Joi = require('joi');
 
 /**
  * ObjectId 검증 미들웨어 생성
  */
-const {ObjectId } = require('mongoose').Types;
-exports.checkObjectId = (ctx, next) =>{
-    const{id} = ctx.params;
+const {ObjectId} = require('mongoose').Types;
+exports.checkObjectId = (ctx, next) => {
+    const {id} = ctx.params;
 
     //verification failure
-    if(!ObjectId.isValid(id)){
+    if (!ObjectId.isValid(id)) {
         ctx.status = 400;  //400 Bad Request
         return null;
     }
@@ -40,7 +40,7 @@ exports.write = async (ctx) => {
     const result = Joi.validate(ctx.request.body, schema);
 
     //if error in validation
-    if(result.error){
+    if (result.error) {
         ctx.status = 400;
         ctx.body = result.error;
         return;
@@ -70,45 +70,51 @@ exports.write = async (ctx) => {
  *  - skip 함수 사용
  *  - limit 함수 사용
  */
-exports.list = async (ctx) => {
-    //page 주어지지 않으면 1로 간주
-    //query는 문자열 형태로 받아 오므로 숫자로 변환한다.
-    const page = parseInt(ctx.query.page || 1, 10);
 
-    if(page < 1){
+exports.list = async (ctx) => {
+    // page 주어지지 않으면 1로 간주
+    // query는 문자열 형태로 받아 오므로 숫자로 변환한다.
+    const page = parseInt(ctx.query.page || 1, 10);
+    const { tag } = ctx.query;
+
+    const query = tag ? {
+        tags: tag // tags 배열에 tag를 가진 포스트 찾기
+    } : {}; //빈 객체로라도 전달해야 find 함수에서 {tags : undefined}전달하며 쿼리 조회를 못하는 이슈를 제어
+
+    // 잘못된 페이지가 주어졌다면 에러
+    if (page < 1) {
         ctx.status = 400;
         return;
     }
+
     try {
         //최근 순서(내림차순 : -1)으로 정렬
-        const posts = await Post.find()
-                            .sort({_id: -1})
-                            .limit(10)
-                            .skip((page - 1) * 10)
-                            .lean()
-                            .exec();
+        const posts = await Post.find(query)
+            .sort({ _id: -1 })
+            .limit(10)
+            .skip((page - 1) * 10)
+            .lean()
+            .exec();
         // 마지막 페이지 번호 알려주기
-        const postCount = await Post.countDocuments().exec()
-        // 마지막 페이지 알려주기.
-        // ctx.set은 response header를 설정한다.
-        ctx.set('Last-Page', Math.ceil(postCount/10));
-
+        const postCount = await Post.countDocuments(query).exec();
         /** 내용 길이 제한
          * 불필요한 데이터 들어가는 것 방지
          *  - 방법 1) 조회한 객체를 toJson 함수로 JSON 형태로 변환
          *  - 방법 2) 쿼리할 때 lean 함수를 사용하여 처음부터 JSON 형태로 조회
          */
         const limitBodyLength = post => ({
-            ...post, //.toJSON(),
-            body: post.body.length < 200 ? post.body : `${post.body.slice(0, 200)}...`
+            ...post,
+            body: post.body.length < 350 ? post.body : `${post.body.slice(0, 350)}...`
         });
-
-        ctx.body = posts.map(limitBodyLength);  //post add to response body
-
+        ctx.body = posts.map(limitBodyLength);
+        // 마지막 페이지 알려주기.
+        // ctx.set은 response header를 설정한다.
+        ctx.set('Last-Page', Math.ceil(postCount / 10));
     } catch (e) {
-        ctx.throw(e, 500)
+        ctx.throw(500, e);
     }
 };
+
 
 /**
  * 특정 포스트 조회
@@ -119,12 +125,12 @@ exports.read = async (ctx) => {
 
     try {
         const post = await Post.findById(id).exec();
-        if(!post){
+        if (!post) {
             ctx.status = 404;
             return;
         }
         ctx.body = post;      //post add to response body
-    }catch (e){
+    } catch (e) {
         ctx.throw(e, 500);
     }
 
@@ -139,17 +145,16 @@ exports.read = async (ctx) => {
  *
  */
 exports.remove = async (ctx) => {
-    const{id } = ctx.params;
+    const {id} = ctx.params;
 
-    try{
+    try {
         await Post.findByIdAndRemove(id).exec();
         ctx.status = 204;
-    }catch(e){
+    } catch (e) {
         ctx.throw(e, 500);
     }
 
 };
-
 
 
 /**
@@ -159,20 +164,20 @@ exports.remove = async (ctx) => {
  */
 exports.update = async (ctx) => {
     const {id} = ctx.params;
-    try{
+    try {
         const post = await Post.findByIdAndUpdate(id, ctx.request.body, {
             new: true
             //이 값을 설정해야 업데이트 된 객체를 반환함
             //설정하지 않으면 업데이트 전의 객체 반환
         }).exec();
 
-        if(!post){
+        if (!post) {
             ctx.status = 404;
             return
         }
         ctx.body = post
 
-    }catch(e){
+    } catch (e) {
         ctx.throw(e, 500)
     }
 

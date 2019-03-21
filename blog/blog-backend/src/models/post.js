@@ -16,8 +16,8 @@
  *
  */
 
-const mongoose = require('mongoose')
-const { Schema } = mongoose
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
 /**
  * 스키마 Post 생성
@@ -25,12 +25,12 @@ const { Schema } = mongoose
 const Post = new Schema({
     title: String,
     body: String,
-    tags: [String], //String array
-    publishedDate : {
+    tags: [String], // 문자열의 배열
+    publishedDate: {
         type: Date,
-        default : new Date() //현재 날짜를 기본 값으로 지정
+        default: new Date() // 현재 날짜를 기본값으로 지정
     }
-})
+});
 
 /**
  * 모델 생성 -- mongoose.model 함수
@@ -39,4 +39,4 @@ const Post = new Schema({
  * 혹은 사용자 정의 방식으로 컬렉션 이름을 작성하려면 다음과 같이 작성
  * - model( '스키마 이름', 스키마 객체, '사용자 정의 컬렉션 이름' )
  */
-module.exports = mongoose.model('Post', Post)
+module.exports = mongoose.model('Post', Post);

@@ -1,6 +1,6 @@
-require('dotenv').config()
+require('dotenv').config();
 
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 /** 환경 변수
  * Node.js에서 환경변수는 process.env 파일로 조회 가능
@@ -9,39 +9,39 @@ const mongoose = require('mongoose')
 const {
     PORT : port = 4000, //값 없으면 4000을 디폴트로 설정
     MONGO_URI : mongoURI
-} = process.env
+} = process.env;
 
 
 /**
  * mongoose에서 데이터베이스에 요청시, 이를 Promise기반으로 처리할 수 있다.
  * 내장된 Promise (node v7~ )를 사용하도록 설정
  */
-mongoose.Promise = global.Promise //Node의 Promise를 사용하도록 설정
+mongoose.Promise = global.Promise; //Node의 Promise를 사용하도록 설정
 mongoose.connect(mongoURI, { useNewUrlParser: true }).then(
     console.log('connected to mongodb')
 ).catch((e) => {
     console.error(e)
-})
+});
 
-const Koa = require('koa')
+const Koa = require('koa');
 
-const Router = require('koa-router')
+const Router = require('koa-router');
 /**
  * POST PUT PATCH 같은 http 메서드의 Request Body에 JSON 형식으로 데이터 넣어주면 이를 파싱하여 서버에서 사용가능하게 한다.
  */
-const bodyParser = require('koa-bodyparser')
+const bodyParser = require('koa-bodyparser');
 
 /**
  * /api 경로 등록 위한 모듈 호출
  */
-const api = require('./api')
+const api = require('./api');
 
 //Koa 인스턴스 생성
-const app = new Koa()
-const router = new Router()
+const app = new Koa();
+const router = new Router();
 
 //api route 적용 -- 기존 라우터에 /api 경로 적용
-router.use('/api', api.routes())
+router.use('/api', api.routes());
 
 /**라우터 적용 전에 설정 */
 app.use(bodyParser());
@@ -49,7 +49,7 @@ app.use(bodyParser());
 //router 설정
 router.get('/', (ctx) => {
     ctx.body = 'Home'
-})
+});
 /**
  //  '/params'
  router.get('/about/:name?', (ctx)=>{
@@ -69,7 +69,7 @@ router.get('/', (ctx) => {
 
 /**app 인스턴스에 라우터 적용*/
 app.use(router.routes())
-    .use(router.allowedMethods())
+    .use(router.allowedMethods());
 
 // ES7 비동기 연습 async / await
 // app.use(async (ctx, next)=>{
@@ -91,4 +91,5 @@ app.use(router.routes())
 
 app.listen(port, () => {
     console.log('listening to port ', port)
-})
+});
+

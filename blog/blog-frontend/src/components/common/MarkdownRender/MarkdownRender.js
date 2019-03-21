@@ -63,6 +63,15 @@ class MarkdownRender extends Component {
         }
     }
 
+    /**
+     * 처음부터 마크다운 값이 있는 /post/{postId} 에서 하이라이팅 적용
+     */
+    componentDidMount(){
+        Prism.highlightAll();
+    }
+    /**
+     *  에디터에서 마크다운 변경시 하이라이팅 호출
+     */
     componentDidUpdate(prevProps, prevState) {
         //markdown 값이 변경되면 renderMarkdown을 호출한다.
         if (prevProps.markdown !== this.props.markdown) {

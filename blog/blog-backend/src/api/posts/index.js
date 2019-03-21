@@ -16,13 +16,13 @@ const posts = new Router()
  */
 
 
-posts.get('/', postsCtrl.list)
-posts.post('/', postsCtrl.write)
+posts.get('/', postsCtrl.list);
+posts.post('/', postsCtrl.write);
 
 /** ObjectId 검증 필요한 부분에 미들웨어 추가 */
-posts.get('/:id', postsCtrl.checkObjectId, postsCtrl.read)
-posts.delete('/:id', postsCtrl.checkObjectId, postsCtrl.remove)
+posts.get('/:id', postsCtrl.checkObjectId, postsCtrl.read);
+posts.delete('/:id', postsCtrl.checkObjectId, postsCtrl.remove);
 /** posts.put 제거 */
-posts.patch('/:id', postsCtrl.checkObjectId, postsCtrl.update)
+posts.patch('/:id', postsCtrl.checkObjectId, postsCtrl.update);
 
-module.exports = posts
+module.exports = posts;
